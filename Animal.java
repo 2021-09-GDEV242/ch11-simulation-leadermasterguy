@@ -87,8 +87,6 @@ public abstract class Animal
         return location;
     }
     
-    
-    
     /**
      * Place the animal at the new location in the given field.
      * @param newLocation The animal's new location.
@@ -125,4 +123,21 @@ public abstract class Animal
      * @return The breeding age of this animal.
      */
     abstract protected int getBreedingAge();
+    
+    /**
+     * Return the max age of this animal.
+     * @return The max age of this animal.
+     */
+    abstract protected int getMaxAge();
+    
+    /**
+     * Increase the age. This could result in the fox's death.
+     */
+    protected void incrementAge()
+    {
+        age++;
+        if(age > getMaxAge()) {
+            setDead();
+        }
+    }
     }
