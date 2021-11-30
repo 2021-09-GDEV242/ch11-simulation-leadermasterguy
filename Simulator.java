@@ -8,8 +8,7 @@ import java.awt.Color;
  * A simple predator-prey simulator, based on a rectangular field
  * containing rabbits and foxes.
  * 
- * @author Nicholas Trilone
- * @version 2021.11.29
+x
  */
 public class Simulator
 {
@@ -22,7 +21,9 @@ public class Simulator
     private static final double FOX_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
-
+    // The probability that a bear will be created in any given grid position.
+    private static final double BEAR_CREATION_PROBABILITY = 0.01;
+    
     // List of animals in the field.
     private List<Animal> animals;
     // The current state of the field.
@@ -61,6 +62,7 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.ORANGE);
         view.setColor(Fox.class, Color.BLUE);
+        view.setColor(Bear.class, Color.BLACK);
         
         // Setup a valid starting point.
         reset();
@@ -91,7 +93,7 @@ public class Simulator
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
-     * fox and rabbit.
+     * bear, fox and rabbit.
      */
     public void simulateOneStep()
     {
@@ -108,7 +110,7 @@ public class Simulator
             }
         }
                
-        // Add the newly born foxes and rabbits to the main lists.
+        // Add the newly born bears, foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
         view.showStatus(step, field);
@@ -128,7 +130,7 @@ public class Simulator
     }
     
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with bears, foxes and rabbits.
      */
     private void populate()
     {
@@ -136,7 +138,12 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                if(rand.nextDouble() <= BEAR_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Bear bear = new Bear(true, field, location);
+                    animals.add(bear);
+                }
+                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location);
                     animals.add(fox);
