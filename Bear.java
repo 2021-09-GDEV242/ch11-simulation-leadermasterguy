@@ -5,6 +5,7 @@ import java.util.Random;
 /**
  * A simple model of a bear.
  * Bears age, move, eat rabbits and foxes, and die.
+ * Functionally similar to fox, but has a modified hunger/eating system
  * 
  * @author Nicholas Trilone
  * @version 2021.11.29
